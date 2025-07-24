@@ -1,362 +1,756 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Disinfo Guard for Parties™ | 札幌発・ファクトチェック & SNS 監視サービス</title>
-  <style>
-    /* === Reset & Common === */
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{
-      font-family:'Helvetica Neue','Hiragino Kaku Gothic ProN',Meiryo,sans-serif;
-      line-height:1.6;color:#333;
-      background:#fff;
-    }
-    a{text-decoration:none;color:inherit}
-    img{max-width:100%;height:auto;display:block}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>政党向けファクトチェック&SNS監視サービス</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* === Layout === */
-    .container{max-width:1200px;margin:0 auto;padding:0 20px}
-    header{position:fixed;top:0;left:0;right:0;z-index:1000;
-      background:rgba(255,255,255,.95);backdrop-filter:blur(10px);
-      box-shadow:0 2px 20px rgba(0,0,0,.08)}
-    nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 0}
-    .logo{font-size:1.5rem;font-weight:700;color:#667eea}
-    .nav-links{display:flex;gap:2rem;list-style:none}
-    .nav-links a{font-weight:500;transition:color .3s}
-    .nav-links a:hover{color:#667eea}
+        body {
+            font-family: 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
 
-    @media(max-width:768px){.nav-links{display:none}}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    /* === Hero === */
-    .hero{
-      min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;
-      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding-top:80px}
-    .hero h1{font-size:3rem;font-weight:700;margin-bottom:1rem;text-shadow:2px 2px 4px rgba(0,0,0,.3)}
-    .hero p{font-size:1.2rem;margin-bottom:2rem}
-    .cta-btn{
-      display:inline-block;padding:15px 30px;border-radius:50px;font-weight:700;
-      background:linear-gradient(45deg,#ff6b6b,#ee5a24);color:#fff;
-      box-shadow:0 4px 15px rgba(0,0,0,.2);transition:transform .3s,box-shadow .3s}
-    .cta-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.3)}
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
 
-    /* === Sections === */
-    section{padding:100px 0}
-    .section-title{text-align:center;font-size:2.4rem;font-weight:700;margin-bottom:3rem;color:#333}
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    /* Cards / Grid */
-    .grid{display:grid;gap:2rem}
-    @media(min-width:769px){.features-grid{grid-template-columns:repeat(3,1fr)}
-      .pricing-grid,.option-grid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-      .stats-grid{grid-template-columns:repeat(2,1fr)}
-      .process-steps{grid-template-columns:repeat(3,1fr)}}
-    .card{background:#fff;border-radius:15px;padding:2rem;border-left:4px solid #667eea;
-      box-shadow:0 10px 30px rgba(0,0,0,.08);transition:.3s}
-    .card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.12)}
-    .card h3{font-size:1.5rem;margin-bottom:1rem}
-    .features .emoji{font-size:2.5rem;margin-bottom:.5rem}
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
 
-    /* Pricing */
-    .pricing-card{border:2px solid #f0f0f0;text-align:center;position:relative}
-    .pricing-card.featured{border-color:#667eea;transform:scale(1.05)}
-    .plan-price{font-size:2.2rem;font-weight:700;color:#667eea}
-    .plan-period{color:#666;margin-bottom:1.5rem}
-    .plan-features{list-style:none;margin-bottom:1.5rem;text-align:left}
-    .plan-features li{padding:.4rem 0;border-bottom:1px solid #f0f0f0}
-    .plan-features li:last-child{border:none}
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
 
-    /* Stats */
-    .stat-number{font-size:2.8rem;font-weight:700;color:#667eea}
-    .stat-label{font-size:1rem;color:#555}
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
 
-    /* Contact */
-    .contact-form{max-width:600px;margin:0 auto;background:#fff;border-radius:15px;
-      box-shadow:0 10px 30px rgba(0,0,0,.08);padding:3rem}
-    .form-group{margin-bottom:1.4rem}
-    .form-group label{display:block;margin-bottom:.5rem;font-weight:700}
-    .form-group input,.form-group textarea,.form-group select{
-      width:100%;padding:12px;border:2px solid #f0f0f0;border-radius:8px;font-size:1rem;
-      transition:border-color .3s}
-    .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:#667eea;outline:none}
-    .submit-btn{width:100%;padding:15px;border:none;border-radius:8px;font-size:1.1rem;font-weight:700;
-      background:linear-gradient(45deg,#667eea,#764ba2);color:#fff;cursor:pointer;transition:.3s}
-    .submit-btn:hover{transform:translateY(-2px)}
-    .note{font-size:.9rem;color:#666;margin-top:.8rem}
+        .nav-links a:hover {
+            color: #667eea;
+        }
 
-    /* Footer */
-    footer{background:#333;color:#fff;text-align:center;padding:2rem 0}
-    footer a{color:#fff;text-decoration:underline}
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding-top: 100px;
+        }
 
-  </style>
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Features Section */
+        .features {
+            background: white;
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid #667eea;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .img-placeholder {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background: #f8f9fa;
+            padding: 100px 0;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .pricing-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            border: 2px solid #f0f0f0;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-period {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .plan-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .plan-features li:before {
+            content: "✓";
+            color: #667eea;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        /* Options Tables */
+        .options-section {
+            margin-top: 4rem;
+        }
+
+        .options-table {
+            margin-bottom: 3rem;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .options-table h3 {
+            background: #667eea;
+            color: white;
+            padding: 2rem;
+            margin: 0;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+
+        .options-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .options-table th,
+        .options-table td {
+            padding: 1.5rem 2rem;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+
+        .options-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .options-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .price-highlight {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.2rem;
+        }
+
+        /* Monitoring System Section */
+        .monitoring {
+            background: white;
+            padding: 100px 0;
+        }
+
+        .monitoring-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .monitoring-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            border: 2px solid #e0e0e0;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .monitoring-card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+        }
+
+        .monitoring-step {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 50%;
+            line-height: 60px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .monitoring-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 2rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: white;
+            padding: 100px 0;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .features-grid,
+            .pricing-grid,
+            .monitoring-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .options-table {
+                overflow-x: auto;
+            }
+        }
+
+        /* Tax Note */
+        .tax-note {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+    </style>
 </head>
 <body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">政党向けファクトチェックサービス</div>
+            <ul class="nav-links">
+                <li><a href="#features">特徴</a></li>
+                <li><a href="#pricing">料金</a></li>
+                <li><a href="#monitoring">監視体制</a></li>
+                <li><a href="#stats">実績</a></li>
+                <li><a href="#contact">お問い合わせ</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <!-- Header -->
-  <header>
-    <nav class="container">
-      <a href="#" class="logo">Disinfo Guard</a>
-      <ul class="nav-links">
-        <li><a href="#features">特徴</a></li>
-        <li><a href="#pricing">料金</a></li>
-        <li><a href="#system">監視体制</a></li>
-        <li><a href="#contact">お問い合わせ</a></li>
-      </ul>
-    </nav>
-  </header>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>政党向けファクトチェック<br>24時間監視サービス</h1>
+                <p>デマ・誤情報から政党と候補者を守る<br>
+                AI搭載の包括的なディスインフォ対策ソリューション</p>
+                <a href="mailto:piroshi.junky164@gmail.com?cc=itoh.hiroshi@sapporoenews.com&subject=ファクトチェックサービスについて&body=お名前：%0D%0A%0D%0A所属・役職：%0D%0A%0D%0Aご希望プラン：%0D%0A%0D%0Aご質問・ご要望：%0D%0A" class="cta-button">無料相談を申し込む</a>
+            </div>
+        </div>
+    </section>
 
-  <!-- Hero -->
-  <section class="hero" id="top">
-    <div class="container">
-      <h1>札幌発・AIファクトチェック &amp; デマ対策</h1>
-      <p>政党・議員事務所向けに<span style="font-weight:700;">Bot常時監視 × AIフィルタ × 人的レビュー</span>を組み合わせた<br>
-         コンパクトなディスインフォ対策を提供いたします。</p>
-      <a href="#contact" class="cta-btn">無料相談を申し込む</a>
-      <p class="note" style="margin-top:1rem;">運営: 伊藤（@pylosics） | 札幌市内拠点・市外は交通費実費</p>
-    </div>
-  </section>
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">3つの主要機能</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="img-placeholder">予</div>
+                    <h3>予兆検知（Pre-bunk）</h3>
+                    <p>AIが争点・キーワードを予測し、デマが拡散する前に先回りして対策コンテンツを準備いたします。事前の種明かしでデマの効果を無効化できます。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="img-placeholder">監</div>
+                    <h3>24時間監視（Detect）</h3>
+                    <p>X（Twitter）・TikTok・YouTubeを24時間365日リアルタイム監視。怪しい投稿を検知次第、即座にアラート通知をお送りいたします。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="img-placeholder">検</div>
+                    <h3>即時検証（Verify）</h3>
+                    <p>GPT-4と専門スタッフによる真偽判定で、根拠となる一次資料とともに詳細な検証レポートを迅速にお届けいたします。</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Features -->
-  <section class="features" id="features">
-    <div class="container">
-      <h2 class="section-title">サービスの特徴</h2>
-      <div class="grid features-grid">
-        <div class="card">
-          <div class="emoji">🛡️</div>
-          <h3>予兆検知（Pre‑bunk）</h3>
-          <p>AIが争点キーワードを分析し、拡散前に「Q&A画像」や「Short動画」を自動生成します。</p>
-        </div>
-        <div class="card">
-          <div class="emoji">👁️</div>
-          <h3>Bot常時監視（Detect）</h3>
-          <p>X / TikTok のストリームAPIを24時間稼働のBotで受信し、疑わしい投稿をリアルタイムでキュー化します。</p>
-        </div>
-        <div class="card">
-          <div class="emoji">🔍</div>
-          <h3>即時検証（Verify）</h3>
-          <p>GPT‑4oが真偽・攻撃性をスコアリングし、<strong>High</strong>のみ30分以内にSlack通知、Normalは朝夕レビューで工数を最小化します。</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">料金プラン</h2>
+            
+            <!-- Basic Plans -->
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3 class="plan-name">スポットチェック</h3>
+                    <div class="plan-price">2万</div>
+                    <div class="plan-period">/ 件</div>
+                    <ul class="plan-features">
+                        <li>真偽判定レポート（PDF1枚）</li>
+                        <li>24時間以内納品</li>
+                        <li>一次資料の提示</li>
+                        <li>メールサポート</li>
+                    </ul>
+                </div>
+                <div class="pricing-card">
+                    <h3 class="plan-name">ミニパック</h3>
+                    <div class="plan-price">8万</div>
+                    <div class="plan-period">/ 月</div>
+                    <ul class="plan-features">
+                        <li>検証レポート5件まで</li>
+                        <li>監視キーワード15語</li>
+                        <li>SLA 6時間以内</li>
+                        <li>月次レポート（PDF）</li>
+                    </ul>
+                </div>
+                <div class="pricing-card">
+                    <h3 class="plan-name">ベーシック</h3>
+                    <div class="plan-price">20万</div>
+                    <div class="plan-period">/ 月</div>
+                    <ul class="plan-features">
+                        <li>検証レポート10件まで</li>
+                        <li>監視キーワード30語</li>
+                        <li>SLA 4時間以内</li>
+                        <li>週次レポート（PDF）</li>
+                    </ul>
+                </div>
+                <div class="pricing-card">
+                    <h3 class="plan-name">スタンダード</h3>
+                    <div class="plan-price">45万</div>
+                    <div class="plan-period">/ 月</div>
+                    <ul class="plan-features">
+                        <li>検証レポート30件まで</li>
+                        <li>監視キーワード100語</li>
+                        <li>SLA 2時間以内</li>
+                        <li>週次KPIレポート</li>
+                        <li>プレバンキング素材5本</li>
+                    </ul>
+                </div>
+            </div>
 
-  <!-- Pricing -->
-  <section class="pricing" id="pricing">
-    <div class="container">
-      <h2 class="section-title">料金プラン</h2>
+            <!-- Options Tables -->
+            <div class="options-section">
+                <div class="options-table">
+                    <h3>イベントチェック（オプション）</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>サービス名</th>
+                                <th>価格</th>
+                                <th>内容詳細</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>演説速攻チェック</td>
+                                <td><span class="price-highlight">1.5万 / 本</span></td>
+                                <td>15分演説まで対応<br>PDF48時間以内納品<br>要点整理付き</td>
+                            </tr>
+                            <tr>
+                                <td>ライブ中継モニタ</td>
+                                <td><span class="price-highlight">5万 / 2時間</span></td>
+                                <td>リアルタイム文字起こし<br>速報レポート3件まで<br>即座のアラート通知</td>
+                            </tr>
+                            <tr>
+                                <td>現地同行サポート</td>
+                                <td><span class="price-highlight">8万 / 日</span></td>
+                                <td>4時間以内対応保証<br>口頭フィードバック<br>後日詳細PDF提供</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-      <!-- 基本プラン -->
-      <div class="grid pricing-grid">
-        <div class="pricing-card">
-          <h3 class="plan-name">スポットチェック</h3>
-          <div class="plan-price">2万円</div>
-          <div class="plan-period">/ 件</div>
-          <ul class="plan-features">
-            <li>真偽判定 PDF1枚</li>
-            <li>24時間以内納品</li>
-          </ul>
-          <div style="color:#666;">単発で迅速確認</div>
-        </div>
+                <div class="options-table">
+                    <h3>コンテンツ制作オプション</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>オプション名</th>
+                                <th>価格</th>
+                                <th>制作内容</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SNS投稿文案</td>
+                                <td><span class="price-highlight">5千 / 件</span></td>
+                                <td>X（Twitter）用テキスト<br>ハッシュタグ提案<br>投稿時間推奨</td>
+                            </tr>
+                            <tr>
+                                <td>インフォグラフィック</td>
+                                <td><span class="price-highlight">8千 / 枚</span></td>
+                                <td>1200×675px画像<br>QRコード付き<br>ブランドカラー対応</td>
+                            </tr>
+                            <tr>
+                                <td>説明動画制作</td>
+                                <td><span class="price-highlight">1.2万 / 本</span></td>
+                                <td>60秒以内動画<br>字幕・BGM付き<br>SNS最適化済み</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-        <div class="pricing-card">
-          <h3 class="plan-name">ミニパック</h3>
-          <div class="plan-price">8万円</div>
-          <div class="plan-period">/ 月</div>
-          <ul class="plan-features">
-            <li>レポート5件</li>
-            <li>キーワード15語</li>
-            <li>SLA 6時間</li>
-            <li>月次ダイジェスト PDF</li>
-          </ul>
-          <div style="color:#666;">支部・少人数向け</div>
+            <p class="tax-note">※ すべて税込価格です</p>
         </div>
+    </section>
 
-        <div class="pricing-card">
-          <h3 class="plan-name">ベーシック</h3>
-          <div class="plan-price">20万円</div>
-          <div class="plan-period">/ 月</div>
-          <ul class="plan-features">
-            <li>レポート10件</li>
-            <li>キーワード30語</li>
-            <li>SLA 4時間</li>
-            <li>週次サマリ PDF</li>
-          </ul>
-          <div style="color:#666;">地方議会・地域政党</div>
+    <!-- Monitoring System Section -->
+    <section class="monitoring" id="monitoring">
+        <div class="container">
+            <h2 class="section-title">3レイヤー監視体制</h2>
+            <div class="monitoring-grid">
+                <div class="monitoring-card">
+                    <div class="monitoring-step">1</div>
+                    <h3>Bot常時モニタ</h3>
+                    <p>AIが24時間365日SNSを監視し、指定キーワードに関連する投稿を自動でキューに追加いたします。</p>
+                </div>
+                <div class="monitoring-card">
+                    <div class="monitoring-step">2</div>
+                    <h3>GPT-4フィルタ</h3>
+                    <p>収集された投稿をGPT-4が分析し、緊急度（High/Normal/Low）でタグ付けして優先順位を決定いたします。</p>
+                </div>
+                <div class="monitoring-card">
+                    <div class="monitoring-step">3</div>
+                    <h3>人的レビュー</h3>
+                    <p>High案件は即座に対応、Normal案件は朝夕の定時処理で、経験豊富なスタッフが最終判定を行います。</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="pricing-card featured">
-          <h3 class="plan-name">スタンダード</h3>
-          <div class="plan-price">45万円</div>
-          <div class="plan-period">/ 月</div>
-          <ul class="plan-features">
-            <li>レポート30件</li>
-            <li>キーワード100語</li>
-            <li>プレバンキング5本</li>
-            <li>SLA 2時間</li>
-            <li>週次 KPI レポート</li>
-          </ul>
-          <div style="color:#667eea;font-weight:700;">国政新興党向け</div>
+    <!-- Stats Section -->
+    <section class="stats" id="stats">
+        <div class="container">
+            <h2 class="section-title">実績・KPI</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">30分</span>
+                    <div class="stat-label">以内のアラート通知</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24時間365日</span>
+                    <div class="stat-label">監視体制</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">85%</span>
+                    <div class="stat-label">のコスト削減効果</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">8週間</span>
+                    <div class="stat-label">で本格運用開始</div>
+                </div>
+            </div>
         </div>
-      </div>
+    </section>
 
-      <!-- オプション -->
-      <h3 class="section-title" style="margin-top:4rem;font-size:1.8rem;">イベントチェック（オプション）</h3>
-      <div class="grid option-grid">
-        <div class="pricing-card">
-          <h4 class="plan-name">ポストイベント速攻</h4>
-          <div class="plan-price">3万円</div>
-          <div class="plan-period">/ 本</div>
-          <ul class="plan-features">
-            <li>15分演説まで対応</li>
-            <li>録音受領後 48h 納品</li>
-            <li>札幌市外でも移動費不要</li>
-          </ul>
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">お問い合わせ</h2>
+            <form class="contact-form" action="https://formspree.io/piroshi.junky164@gmail.com" method="POST">
+                <input type="hidden" name="_cc" value="itoh.hiroshi@sapporoenews.com">
+                <div class="form-group">
+                    <label for="name">お名前 *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">メールアドレス *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="plan">ご希望プラン</label>
+                    <select id="plan" name="plan">
+                        <option value="">選択してください</option>
+                        <option value="spot">スポットチェック（2万 / 件）</option>
+                        <option value="mini">ミニパック（8万 / 月）</option>
+                        <option value="basic">ベーシック（20万 / 月）</option>
+                        <option value="standard">スタンダード（45万 / 月）</option>
+                        <option value="consultation">まずは相談したい</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">ご質問・ご要望</label>
+                    <textarea id="message" name="message" rows="5" placeholder="現在抱えている課題やサービスについてのご質問などをお聞かせください"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">お問い合わせを送信</button>
+            </form>
         </div>
-        <div class="pricing-card">
-          <h4 class="plan-name">ライブ中継モニタ</h4>
-          <div class="plan-price">8万円</div>
-          <div class="plan-period">/ 2時間</div>
-          <ul class="plan-features">
-            <li>リアルタイム文字起こし</li>
-            <li>誤情報速報 最大5件</li>
-            <li>延長1h +3万円</li>
-          </ul>
-        </div>
-        <div class="pricing-card">
-          <h4 class="plan-name">オンサイト同行</h4>
-          <div class="plan-price">15万円</div>
-          <div class="plan-period">/ 日</div>
-          <ul class="plan-features">
-            <li>4時間以内 現地帯同</li>
-            <li>札幌市外は交通費実費</li>
-            <li>口頭フィードバック＋後日PDF</li>
-          </ul>
-        </div>
-      </div>
+    </section>
 
-      <!-- 周知オプション -->
-      <h3 class="section-title" style="margin-top:4rem;font-size:1.8rem;">周知オプション</h3>
-      <div class="grid option-grid">
-        <div class="pricing-card">
-          <h4 class="plan-name">140字速報</h4>
-          <div class="plan-price">1万円</div>
-          <div class="plan-period">/ 件</div>
-          <ul class="plan-features">
-            <li>X用テキスト文案</li>
-            <li>ハッシュタグ提案</li>
-          </ul>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 政党向けファクトチェックサービス. All rights reserved.</p>
+            <p>政治的中立性を遵守し、民主的プロセスの透明性向上に貢献いたします</p>
+            <p style="margin-top: 1rem; color: #ccc;">運営: 伊藤（@pylosics） | 札幌市内拠点・市外は交通費実費</p>
         </div>
-        <div class="pricing-card">
-          <h4 class="plan-name">画像付きポスト</h4>
-          <div class="plan-price">1.5万円</div>
-          <div class="plan-period">/ 枚</div>
-          <ul class="plan-features">
-            <li>1200×675 インフォグ</li>
-            <li>QRコード付き</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+    </footer>
 
-  <!-- Monitoring System -->
-  <section class="process" id="system">
-    <div class="container">
-      <h2 class="section-title">24時間監視の仕組み</h2>
-      <div class="grid process-steps">
-        <div class="card process-step">
-          <div class="step-number">1</div>
-          <h3>Bot常時モニタ</h3>
-          <p>X / TikTok API ストリームを VPS 上の Bot で24時間受信し、疑わしい投稿のみをキュー化します。</p>
-        </div>
-        <div class="card process-step">
-          <div class="step-number">2</div>
-          <h3>AIフィルタ</h3>
-          <p>GPT‑4o が真偽・攻撃性を数値化し <strong>High / Normal / Low</strong> へ自動分類します。</p>
-        </div>
-        <div class="card process-step">
-          <div class="step-number">3</div>
-          <h3>人的レビュー</h3>
-          <p>High のみ30分以内に Slack &amp; SMS 通知。Normal は朝夕2回のバッチレビューで、人の負担を1h/日以下に抑えます。</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- KPI -->
-  <section class="stats">
-    <div class="container">
-      <div class="grid stats-grid">
-        <div class="stat-item">
-          <div class="stat-number">30分</div>
-          <div class="stat-label">High通知まで</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">24h</div>
-          <div class="stat-label">Bot常時稼働</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">1時間</div>
-          <div class="stat-label">人力工数/日</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">1週間</div>
-          <div class="stat-label">導入最短</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact -->
-  <section class="contact" id="contact">
-    <div class="container">
-      <h2 class="section-title">お問い合わせ・お申し込み</h2>
-      <form class="contact-form" action="https://formspree.io/f/XXXX" method="POST">
-        <div class="form-group">
-          <label for="organization">政党・団体名 *</label>
-          <input type="text" id="organization" name="organization" required>
-        </div>
-        <div class="form-group">
-          <label for="name">お名前 *</label>
-          <input type="text" id="name" name="name" required>
-        </div>
-        <div class="form-group">
-          <label for="email">メールアドレス *</label>
-          <input type="email" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-          <label for="plan">ご希望プラン</label>
-          <select id="plan" name="plan">
-            <option value="">選択してください</option>
-            <option value="spot">スポットチェック（2万円/件）</option>
-            <option value="mini">ミニパック（8万円/月）</option>
-            <option value="basic">ベーシック（20万円/月）</option>
-            <option value="standard">スタンダード（45万円/月）</option>
-            <option value="event_post">イベント：ポスト速攻</option>
-            <option value="event_live">イベント：ライブ中継</option>
-            <option value="event_onsite">イベント：オンサイト同行</option>
-            <option value="option_140">周知：140字速報</option>
-            <option value="option_img">周知：画像付きポスト</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="message">ご質問・ご要望</label>
-          <textarea id="message" name="message" rows="5"></textarea>
-        </div>
-        <button type="submit" class="submit-btn">送信する</button>
-        <p class="note">送信後すぐに確認メールが届きます。<br>
-          お急ぎの方は <a href="https://twitter.com/pylosics" target="_blank" rel="noopener">@pylosics</a> 宛 DM でも承ります。</p>
-      </form>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 Disinfo Guard for Parties™. All rights reserved.</p>
-      <p>政治的中立性を保ち、AI と人のハイブリッドで民主的プロセスの透明性向上に貢献します。</p>
-      <p><a href="https://twitter.com/pylosics" target="_blank" rel="noopener">Twitter&nbsp;@pylosics</a></p>
-    </div>
-  </footer>
-
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
