@@ -3,258 +3,84 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>政党・個人候補向け ファクトチェック & SNS 監視サービス</title>
+    <title>政党・個人の政治家向け｜ファクトチェック & SNS 監視</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+
     <style>
-      :root {
-        --primary: #1e40af;
-        --secondary: #2563eb;
-        --light: #f8fafc;
-        --dark: #0f172a;
-      }
-      * {
-        box-sizing: border-box;
-      }
-      body {
-        margin: 0;
-        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-        line-height: 1.6;
-        color: var(--dark);
-        background: var(--light);
-      }
-      a {
-        color: var(--secondary);
-        text-decoration: none;
-      }
-      header {
-        background: var(--primary);
-        color: #fff;
-        padding: 1rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      nav a {
-        color: #fff;
-        margin-left: 1.5rem;
-        font-size: 0.9rem;
-      }
-      .container {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 2rem 1rem;
-      }
-      .hero {
-        text-align: center;
-        padding: 4rem 1rem 3rem;
-      }
-      .hero h1 {
-        font-size: 2.4rem;
-        margin-bottom: 0.5rem;
-      }
-      .hero p {
-        font-size: 1.1rem;
-        margin-bottom: 1.5rem;
-      }
-      .btn {
-        display: inline-block;
-        background: var(--secondary);
-        color: #fff;
-        padding: 0.75rem 1.5rem;
-        border-radius: 0.375rem;
-        font-weight: 600;
-      }
-      section {
-        margin-bottom: 4rem;
-      }
-      h2 {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-        border-left: 4px solid var(--primary);
-        padding-left: 0.5rem;
-      }
-      .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 1.5rem;
-      }
-      .card {
-        background: #fff;
-        border-radius: 0.5rem;
-        padding: 1.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      }
-      .pricing-table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      .pricing-table th,
-      .pricing-table td {
-        border: 1px solid #e2e8f0;
-        padding: 0.75rem 1rem;
-        text-align: center;
-      }
-      .pricing-table th {
-        background: #f1f5f9;
-      }
-      .steps {
-        list-style: decimal inside;
-        padding-left: 0;
-      }
-      footer {
-        background: var(--dark);
-        color: #cbd5e1;
-        text-align: center;
-        padding: 2rem 1rem;
-        font-size: 0.85rem;
-      }
+      :root { --primary:#2563eb; --primary-dark:#1e40af; --accent:#f97316; --light:#f8fafc; --dark:#0f172a; }
+      *{box-sizing:border-box;margin:0;padding:0}
+      body{font-family:"Poppins","Noto Sans JP",sans-serif;color:var(--dark);background:var(--light);line-height:1.7}
+      a{color:var(--primary);text-decoration:none;transition:.3s} a:hover{color:var(--accent)}
+      header{background:linear-gradient(90deg,var(--primary-dark),var(--primary));color:#fff;padding:1.2rem 2rem;display:flex;justify-content:space-between;align-items:center}
+      header h1{font-size:1.15rem;font-weight:600} nav a{margin-left:1.5rem;font-size:.9rem}
+      .container{max-width:1000px;margin:auto;padding:2.5rem 1.25rem}
+      .hero{background:radial-gradient(circle at 20% 30%,#dbeafe 0%,#eff6ff 100%);border-bottom-left-radius:2rem;border-bottom-right-radius:2rem;text-align:center;padding:5rem 1rem 4rem}
+      .hero h2{font-size:2.5rem;font-weight:700;line-height:1.3;margin-bottom:1rem}
+      .hero p{font-size:1.1rem;margin-bottom:2rem}
+      .btn{display:inline-block;background:var(--accent);color:#fff;padding:.9rem 2rem;border-radius:9999px;font-weight:600;transition:.3s}
+      .btn:hover{transform:translateY(-3px)}
+      h3{font-size:1.2rem;margin-bottom:.5rem;font-weight:600}
+      section:not(.hero) h2{font-size:1.8rem;margin-bottom:1.5rem;border-left:6px solid var(--primary);padding-left:.6rem}
+      .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.8rem}
+      .card{background:#fff;border-radius:1rem;padding:1.7rem 1.4rem;box-shadow:0 6px 18px rgba(0,0,0,.05);transition:.3s}
+      .card:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(0,0,0,.08)}
+      .pricing-table{width:100%;border-collapse:collapse;font-size:.88rem}
+      .pricing-table th,.pricing-table td{border:1px solid #e2e8f0;padding:.9rem .6rem;text-align:center}
+      .pricing-table th{background:#f1f5f9} .pricing-table td.desc{text-align:left}
+      footer{background:var(--dark);color:#94a3b8;text-align:center;padding:2rem 1rem;font-size:.85rem}
     </style>
   </head>
   <body>
     <header>
-      <div>政党・個人候補向け ファクトチェック &amp; SNS 監視</div>
+      <h1>ファクトチェック & SNS 監視</h1>
       <nav>
         <a href="#features">機能</a>
         <a href="#pricing">料金</a>
-        <a href="#why247">24時間監視の理由</a>
-        <a href="#order">ご依頼方法</a>
+        <a href="#why247">24時間監視</a>
+        <a href="#deepdive">技術と運用</a>
         <a href="#contact">お問い合わせ</a>
       </nav>
     </header>
 
-    <main>
-      <!-- Hero -->
-      <section class="hero container">
-        <h1>政党・個人候補を守る<br />24時間ファクトチェック</h1>
-        <p>
-          AI と専門スタッフのハイブリッド体制で、SNS 上の誤情報を早期検知・迅速検証。<br />
-          政党や個人候補でも安心してご利用いただけるライトプランをご用意しております。
-        </p>
-        <a href="#contact" class="btn">無料相談を申し込む</a>
-      </section>
+    <section class="hero">
+      <div class="container">
+        <h2>政党・個人の政治家<br />24時間で守ります</h2>
+        <p>AI × 専門スタッフのハイブリッド体制で<br />SNS デマを高速検知・検証・是正。</p>
+        <a href="#contact" class="btn">X (Twitter) で相談する</a>
+      </div>
+    </section>
 
-      <!-- Features -->
-      <section id="features" class="container">
-        <h2>主な機能</h2>
-        <div class="features-grid">
-          <div class="card">
-            <h3>予兆検知（Pre‑bunk）</h3>
-            <p>
-              AI が争点・キーワードを予測し、デマ拡散前に対策コンテンツを準備。<br />
-              先手を打つことで影響を最小化します。
-            </p>
-          </div>
-          <div class="card">
-            <h3>24 時間監視（Detect）</h3>
-            <p>
-              Twitter, TikTok, YouTube を 365 日リアルタイム監視。<br />
-              怪しい投稿を検知次第、即座にアラートをお届けします。
-            </p>
-          </div>
-          <div class="card">
-            <h3>即時検証（Verify）</h3>
-            <p>
-              GPT‑4 と専門スタッフが真偽判定。<br />
-              一次資料付きのレポートで迅速にご報告します。
-            </p>
-          </div>
-        </div>
-      </section>
+    <!-- Features -->
+    <section id="features" class="container">
+      <h2>主要機能</h2>
+      <div class="grid">
+        <div class="card"><h3>先回りの予兆検知</h3><p>選挙争点・候補者名・党方針を AI が分析し、バズ兆候をスコアリング。</p></div>
+        <div class="card"><h3>365 日リアルタイム監視</h3><p>Twitter (X) / TikTok / YouTube をストリーミング API で常時ウォッチ、最短 2 分でアラート。</p></div>
+        <div class="card"><h3>即時検証（Verify）</h3><p>GPT‑4 が投稿を分解し、<strong>一次資料＝政府統計・国会資料・判例・公式リリースなど原典データ</strong>と照合。専門スタッフが根拠リンク付きで真偽を判定し、PDFレポートを即納します。</p></div>
+        <div class="card"><h3>誤情報拡散者への警告</h3><p>公式アカウントから訂正依頼 DM・リプライを自動生成し、拡散抑止。</p></div>
+      </div>
+    </section>
 
-      <!-- Pricing -->
-      <section id="pricing" class="container">
-        <h2>料金プラン</h2>
-        <table class="pricing-table">
-          <thead>
-            <tr>
-              <th>プラン名</th>
-              <th>月額(税込)</th>
-              <th>検証レポート</th>
-              <th>監視キーワード</th>
-              <th>SLA</th>
-              <th>おすすめ</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>個人ライト</strong></td>
-              <td>30,000 円</td>
-              <td>3 件まで / 月</td>
-              <td>5 語</td>
-              <td>24 時間以内</td>
-              <td>個人候補向け</td>
-            </tr>
-            <tr>
-              <td>スポットチェック</td>
-              <td>20,000 円 / 件</td>
-              <td>―</td>
-              <td>―</td>
-              <td>24 時間以内</td>
-              <td>単発依頼</td>
-            </tr>
-            <tr>
-              <td>ミニパック</td>
-              <td>80,000 円</td>
-              <td>5 件まで / 月</td>
-              <td>15 語</td>
-              <td>6 時間以内</td>
-              <td>小規模陣営</td>
-            </tr>
-            <tr>
-              <td>ベーシック</td>
-              <td>200,000 円</td>
-              <td>10 件まで / 月</td>
-              <td>30 語</td>
-              <td>4 時間以内</td>
-              <td>標準</td>
-            </tr>
-            <tr>
-              <td>スタンダード</td>
-              <td>450,000 円</td>
-              <td>30 件まで / 月</td>
-              <td>100 語</td>
-              <td>2 時間以内</td>
-              <td>大規模陣営</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
+    <!-- Pricing -->
+    <section id="pricing" class="container">
+      <h2>料金プラン (税込)</h2>
+      <table class="pricing-table">
+        <thead><tr><th>プラン</th><th>月額 / 料金</th><th>SLA</th><th>対象</th><th class="desc">主な内容</th></tr></thead>
+        <tbody>
+          <tr><td><strong>個人ライト</strong></td><td>¥30,000 月額</td><td>24h</td><td>個人の政治家</td><td class="desc">▶ X 監視 (5語)<br/>▶ アラート DM/メール<br/>▶ 真偽判定3件/月 (簡易PDF)<br/>▶ 月次サマリー</td></tr>
+          <tr><td><strong>スポットチェック</strong></td><td>¥20,000 / 件</td><td>24h</td><td>単発</td><td class="desc">▶ 投稿1件の真偽判定<br/>▶ 1ページPDFレポート<br/>▶ 訂正テンプレ付き</td></tr>
+          <tr><td><strong>ミニパック</strong></td><td>¥80,000 月額</td><td>6h</td><td>小規模陣営</td><td class="desc">▶ X・TikTok監視 (15語)<br/>▶ レポート5件/月<br/>▶ ダッシュボード閲覧<br/>▶ 週次ハイライト</td></tr>
+          <tr><td><strong>ベーシック</strong></td><td>¥200,000 月額</td><td>4h</td><td>標準</td><td class="desc">▶ X・TikTok・YouTube監視 (30語)<br/>▶ 詳細レポ10件/月<br/>▶ 電話サポート<br/>▶ 週次＋月次レポ</td></tr>
+          <tr><td><strong>スタンダード</strong></td><td>¥450,000 月額</td><td>2h</td><td>大規模</td><td class="desc">▶ 全SNS&News監視 (100語)<br/>▶ レポ30件/月<br/>▶ 24/7チャット + WarRoom<br/>▶ 世論調査ダッシュボード</td></tr>
+        </tbody>
+      </table>
+    </section>
 
-      <!-- Why 24/7 Monitoring -->
-      <section id="why247" class="container">
-        <h2>24 時間監視が可能な理由</h2>
-        <div class="card">
-          <p>
-            当サービスでは、以下の 3 つの仕組みにより <strong>政党・個人候補の皆さまでもコストを抑えつつ 24
-            時間監視</strong> を実現しています。
-          </p>
-          <ul>
-            <li><strong>AI クローラー</strong>：オープンソースベースのスクレイピング・ストリーミング API を活用し、主要 SNS を低コストで常時監視。</li>
-            <li><strong>サーバーレス構成</strong>：AWS Lambda / Cloud Functions でインフラを自動スケール。深夜帯の負荷を最小限に抑えます。</li>
-            <li><strong>アラート優先度制御</strong>：GPT‑4 による緊急度タグ付けで、夜間は High 緊急度のみ人間が確認。その他は翌朝処理し、運用コストを 80% 以上削減。</li>
-          </ul>
-          <p>
-            これらにより、<em>人件費を最小限に保ちつつ</em>、深夜の誤情報拡散にもリアルタイムで対処できる体制を維持しております。
-          </p>
-        </div>
-      </section>
-
-      <!-- Order Steps -->
-      <section id="order" class="container">
-        <h2>ご依頼の流れ</h2>
-        <ol class="steps">
-          <li><strong>無料相談フォーム</strong>よりお問い合わせ（24 時間受付）。</li>
-          <li>ニーズに合わせて<strong>プランと監視キーワード</strong>を確定。</li>
-          <li>オンライン契約 &amp; 決済（クレジットカード / 銀行振込）。</li>
-          <li>最短 <strong>翌営業日</strong> から監視開始。初回レポートを 24 時間以内にお届けします。</li>
-        </ol>
-      </section>
-
-      <!-- Contact -->
-      <section id="contact" class="container">
-        <h2>お問い合わせ</h2>
-        <p>
-          下記フォームまたはメール（<a href="mailto:contact@pylosics.com">contact@pylosics.com</a>）にて承ります。<br />
-          札幌市内の対面相談も可能です（要予約）。
-        </p>
-        <!-- Dummy form markup - replace action with actual back‑end endpoint -->
-        <form action="https://example
+    <!-- Other sections remain unchanged -->
+    <!-- Why 24/7 -->
+    <section id="why247" class="container">
+      <h2>24 時間監視を実現するカギ</h2>
+      <div class="grid">
+        <div class="card"><h3>サーバーレス & オートスケール</h3><p>AWS Lambda / Cloud Functions でピークトラフィックも自動吸収しコストを
