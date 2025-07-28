@@ -1,86 +1,613 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>政党・個人の政治家向け｜ファクトチェック & SNS 監視</title>
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>政治家・政党向け｜AI ファクトチェック & デマ対策サービス</title>
+    
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    
     <style>
-      :root { --primary:#2563eb; --primary-dark:#1e40af; --accent:#f97316; --light:#f8fafc; --dark:#0f172a; }
-      *{box-sizing:border-box;margin:0;padding:0}
-      body{font-family:"Poppins","Noto Sans JP",sans-serif;color:var(--dark);background:var(--light);line-height:1.7}
-      a{color:var(--primary);text-decoration:none;transition:.3s} a:hover{color:var(--accent)}
-      header{background:linear-gradient(90deg,var(--primary-dark),var(--primary));color:#fff;padding:1.2rem 2rem;display:flex;justify-content:space-between;align-items:center}
-      header h1{font-size:1.15rem;font-weight:600} nav a{margin-left:1.5rem;font-size:.9rem}
-      .container{max-width:1000px;margin:auto;padding:2.5rem 1.25rem}
-      .hero{background:radial-gradient(circle at 20% 30%,#dbeafe 0%,#eff6ff 100%);border-bottom-left-radius:2rem;border-bottom-right-radius:2rem;text-align:center;padding:5rem 1rem 4rem}
-      .hero h2{font-size:2.5rem;font-weight:700;line-height:1.3;margin-bottom:1rem}
-      .hero p{font-size:1.1rem;margin-bottom:2rem}
-      .btn{display:inline-block;background:var(--accent);color:#fff;padding:.9rem 2rem;border-radius:9999px;font-weight:600;transition:.3s}
-      .btn:hover{transform:translateY(-3px)}
-      h3{font-size:1.2rem;margin-bottom:.5rem;font-weight:600}
-      section:not(.hero) h2{font-size:1.8rem;margin-bottom:1.5rem;border-left:6px solid var(--primary);padding-left:.6rem}
-      .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.8rem}
-      .card{background:#fff;border-radius:1rem;padding:1.7rem 1.4rem;box-shadow:0 6px 18px rgba(0,0,0,.05);transition:.3s}
-      .card:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(0,0,0,.08)}
-      .pricing-table{width:100%;border-collapse:collapse;font-size:.88rem}
-      .pricing-table th,.pricing-table td{border:1px solid #e2e8f0;padding:.9rem .6rem;text-align:center}
-      .pricing-table th{background:#f1f5f9} .pricing-table td.desc{text-align:left}
-      footer{background:var(--dark);color:#94a3b8;text-align:center;padding:2rem 1rem;font-size:.85rem}
+        :root {
+            --primary: #1e40af;
+            --primary-light: #3b82f6;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #0f172a;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-600: #475569;
+            --gray-800: #1e293b;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            color: var(--dark);
+            background: var(--gray-50);
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--accent);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, #6366f1 100%);
+            color: white;
+            padding: 8rem 0 6rem;
+            margin-top: 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .section-title p {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Crisis Alert */
+        .crisis-alert {
+            background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 3rem 0;
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.9; }
+        }
+        
+        .crisis-alert h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            border-top: 4px solid var(--primary);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .feature-card p {
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+        
+        /* Pricing */
+        .pricing-section {
+            background: white;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .pricing-card {
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .pricing-card.featured {
+            border-color: var(--primary);
+            background: white;
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(30, 64, 175, 0.15);
+        }
+        
+        .pricing-card.featured::before {
+            content: '人気';
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+        
+        .price-period {
+            font-size: 1rem;
+            color: var(--gray-600);
+            font-weight: 400;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+        
+        .pricing-features li {
+            padding: 0.5rem 0;
+            color: var(--gray-600);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .pricing-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+        
+        /* Stats */
+        .stats-section {
+            background: var(--dark);
+            color: white;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+        
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-item p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--gray-800);
+            color: var(--gray-200);
+            padding: 3rem 0 2rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .features-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-card.featured {
+                transform: none;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <header>
-      <h1>ファクトチェック & SNS 監視</h1>
-      <nav>
-        <a href="#features">機能</a>
-        <a href="#pricing">料金</a>
-        <a href="#why247">24時間監視</a>
-        <a href="#deepdive">技術と運用</a>
-        <a href="#contact">お問い合わせ</a>
-      </nav>
+        <div class="header-content">
+            <div class="logo">🛡️ PolitiGuard</div>
+            <nav>
+                <a href="#features">機能</a>
+                <a href="#pricing">料金</a>
+                <a href="#stats">現状分析</a>
+                <a href="#contact">相談</a>
+            </nav>
+        </div>
     </header>
 
+    <!-- Hero Section -->
     <section class="hero">
-      <div class="container">
-        <h2>政党・個人の政治家<br />24時間で守ります</h2>
-        <p>AI × 専門スタッフのハイブリッド体制で<br />SNS デマを高速検知・検証・是正。</p>
-        <a href="#contact" class="btn">X (Twitter) で相談する</a>
-      </div>
+        <div class="hero-content">
+            <h1>政治家のSNS<br>リスクを監視</h1>
+            <p class="subtitle">個人開発者が作った政治家向けSNS監視ツール。<br>AIがデマ・炎上の兆候を検知し、アラートでお知らせします。</p>
+            
+            <div class="crisis-alert">
+                <h3>⚠️ 個人開発プロジェクト</h3>
+                <p>現在β版として運用中。フィードバックをお待ちしています。</p>
+            </div>
+            
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">無料相談を申し込む</a>
+                <a href="#features" class="btn btn-secondary">詳細を見る</a>
+            </div>
+        </div>
     </section>
 
     <!-- Features -->
-    <section id="features" class="container">
-      <h2>主要機能</h2>
-      <div class="grid">
-        <div class="card"><h3>先回りの予兆検知</h3><p>選挙争点・候補者名・党方針を AI が分析し、バズ兆候をスコアリング。</p></div>
-        <div class="card"><h3>365 日リアルタイム監視</h3><p>Twitter (X) / TikTok / YouTube をストリーミング API で常時ウォッチ、最短 2 分でアラート。</p></div>
-        <div class="card"><h3>即時検証（Verify）</h3><p>GPT‑4 が投稿を分解し、<strong>一次資料＝政府統計・国会資料・判例・公式リリースなど原典データ</strong>と照合。専門スタッフが根拠リンク付きで真偽を判定し、PDFレポートを即納します。</p></div>
-        <div class="card"><h3>誤情報拡散者への警告</h3><p>公式アカウントから訂正依頼 DM・リプライを自動生成し、拡散抑止。</p></div>
-      </div>
+    <section id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>機能とできること</h2>
+                <p>個人開発ですが、政治家が直面するSNSリスクの早期発見をサポートします。</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AIによる自動監視</h3>
+                    <p>Twitter/X上であなたに関する投稿を24時間自動で収集・分析します。人手ではできない大量データの処理が可能です。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>リスクスコア判定</h3>
+                    <p>収集した投稿をAIが分析し、炎上リスクを0-100でスコア化。注意が必要な投稿を優先的にお知らせします。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>リアルタイム通知</h3>
+                    <p>高リスクな投稿を検知した際は、LINE・メール・Slackでお知らせ。外出先でも状況を把握できます。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>傾向分析レポート</h3>
+                    <p>週次・月次で投稿傾向やリスク推移をレポート化。どんな話題で炎上しやすいかが分かります。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>シンプル運用</h3>
+                    <p>複雑な設定は不要。キーワードを設定するだけで監視開始。個人事業主でも無理なく運用できます。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💡</div>
+                    <h3>継続改善</h3>
+                    <p>利用者のフィードバックを元に機能を継続的に改善。個人開発ならではの機動力で対応します。</p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Pricing -->
-    <section id="pricing" class="container">
-      <h2>料金プラン (税込)</h2>
-      <table class="pricing-table">
-        <thead><tr><th>プラン</th><th>月額 / 料金</th><th>SLA</th><th>対象</th><th class="desc">主な内容</th></tr></thead>
-        <tbody>
-          <tr><td><strong>個人ライト</strong></td><td>¥30,000 月額</td><td>24h</td><td>個人の政治家</td><td class="desc">▶ X 監視 (5語)<br/>▶ アラート DM/メール<br/>▶ 真偽判定3件/月 (簡易PDF)<br/>▶ 月次サマリー</td></tr>
-          <tr><td><strong>スポットチェック</strong></td><td>¥20,000 / 件</td><td>24h</td><td>単発</td><td class="desc">▶ 投稿1件の真偽判定<br/>▶ 1ページPDFレポート<br/>▶ 訂正テンプレ付き</td></tr>
-          <tr><td><strong>ミニパック</strong></td><td>¥80,000 月額</td><td>6h</td><td>小規模陣営</td><td class="desc">▶ X・TikTok監視 (15語)<br/>▶ レポート5件/月<br/>▶ ダッシュボード閲覧<br/>▶ 週次ハイライト</td></tr>
-          <tr><td><strong>ベーシック</strong></td><td>¥200,000 月額</td><td>4h</td><td>標準</td><td class="desc">▶ X・TikTok・YouTube監視 (30語)<br/>▶ 詳細レポ10件/月<br/>▶ 電話サポート<br/>▶ 週次＋月次レポ</td></tr>
-          <tr><td><strong>スタンダード</strong></td><td>¥450,000 月額</td><td>2h</td><td>大規模</td><td class="desc">▶ 全SNS&News監視 (100語)<br/>▶ レポ30件/月<br/>▶ 24/7チャット + WarRoom<br/>▶ 世論調査ダッシュボード</td></tr>
-        </tbody>
-      </table>
+    <section id="pricing" class="pricing-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>料金プラン</h2>
+                <p>個人開発のため、シンプルで分かりやすい料金設定です。</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>お試しプラン</h3>
+                    <div class="price">¥5,000<span class="price-period">/月</span></div>
+                    <ul class="pricing-features">
+                        <li>Twitter監視（3キーワード）</li>
+                        <li>週1回のレポート</li>
+                        <li>メール通知</li>
+                        <li>基本的なリスクスコア</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary" style="width: 100%; text-align: center;">選択する</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <h3>スタンダード</h3>
+                    <div class="price">¥15,000<span class="price-period">/月</span></div>
+                    <ul class="pricing-features">
+                        <li>Twitter監視（10キーワード）</li>
+                        <li>リアルタイム通知</li>
+                        <li>詳細レポート（週次）</li>
+                        <li>LINE・Slack通知対応</li>
+                        <li>優先サポート（DMで相談）</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary" style="width: 100%; text-align: center;">選択する</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>カスタム</h3>
+                    <div class="price">要相談<span class="price-period"></span></div>
+                    <ul class="pricing-features">
+                        <li>監視キーワード無制限</li>
+                        <li>カスタム分析ロジック</li>
+                        <li>API連携</li>
+                        <li>専用ダッシュボード</li>
+                        <li>個別機能開発</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary" style="width: 100%; text-align: center;">相談する</a>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- Other sections remain unchanged -->
-    <!-- Why 24/7 -->
-    <section id="why247" class="container">
-      <h2>24 時間監視を実現するカギ</h2>
-      <div class="grid">
-        <div class="card"><h3>サーバーレス & オートスケール</h3><p>AWS Lambda / Cloud Functions でピークトラフィックも自動吸収しコストを
+    <!-- Why Choose Us -->
+    <section id="stats" class="stats-section">
+        <div class="container">
+            <div class="section-title">
+                <h2 style="color: white;">なぜ今、対策が必要なのか</h2>
+                <p style="color: rgba(255,255,255,0.8);">政治家を取り巻くデジタル環境の現実</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>300%</h3>
+                    <p>選挙期間中のデマ増加率<br><small>（総務省調査より）</small></p>
+                </div>
+                <div class="stat-item">
+                    <h3>72時間</h3>
+                    <p>デマが拡散し続ける平均時間<br><small>（未対策の場合）</small></p>
+                </div>
+                <div class="stat-item">
+                    <h3>85%</h3>
+                    <p>SNS上の政治情報を信じる有権者<br><small>（民間調査より）</small></p>
+                </div>
+                <div class="stat-item">
+                    <h3>24時間</h3>
+                    <p>私たちの監視体制<br><small>（365日体制）</small></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <footer id="contact">
+        <div class="footer-content">
+            <h2 style="margin-bottom: 2rem;">お気軽にご相談ください</h2>
+            <p style="margin-bottom: 2rem; font-size: 1.1rem;">個人開発のため、お一人お一人のニーズに柔軟に対応します。<br>まずはTwitterでお気軽にお声がけください。</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>💬</span>
+                    <span>@pylosics</span>
+                </div>
+            </div>
+            
+            <div style="margin-top: 2rem;">
+                <a href="https://twitter.com/pylosics" class="btn btn-primary" style="font-size: 1.1rem; padding: 1.2rem 3rem;">Twitterでお問い合わせ</a>
+            </div>
+            
+            <p style="margin-top: 3rem; opacity: 0.7; font-size: 0.9rem;">
+                © 2025 個人開発プロジェクト by @pylosics | 政治家向けSNS監視ツール
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
