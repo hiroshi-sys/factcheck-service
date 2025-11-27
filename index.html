@@ -3,240 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SNSデマ検証・注意喚起サービス</title>
+    <title>独立系ファクトチェック・情報検証サービス</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* カラーパレットの設定 */
+        :root {
+            --main-color: #1F3A68; /* 濃紺: 信頼性 */
+            --accent-color: #00bcd4; /* シアン: 迅速性・視認性 */
+            --bg-color: #f8f9fa; 
+            --text-color: #333;
         }
 
+        /* 全体のスタイル調整 (プロフェッショナルな印象へ) */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Noto Sans JP', sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: white; 
             min-height: 100vh;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px;
         }
 
+        /* 信頼性を高めるヘッダー */
         header {
-            text-align: center;
-            padding: 60px 20px;
+            background: var(--main-color);
             color: white;
+            padding: 80px 20px;
+            text-align: center;
         }
 
         h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-size: 3em;
+            margin-bottom: 15px;
         }
 
         .subtitle {
-            font-size: 1.2em;
-            margin-bottom: 10px;
+            font-size: 1.4em;
+            margin-bottom: 30px;
             opacity: 0.95;
         }
-
-        .beta-badge {
+        
+        /* CTA ボタンをヘッダーに配置 (明確化) */
+        .cta-button {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            margin-top: 10px;
+            background: var(--accent-color); /* 目立つアクセントカラー */
+            color: var(--main-color);
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 188, 212, 0.4); /* シャドウで目立たせる */
+        }
+        .cta-button:hover {
+            background: #00a6b8;
         }
 
         .main-content {
             background: white;
-            border-radius: 15px;
             padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             margin-bottom: 40px;
+            position: relative;
+            top: -30px; /* ヘッダーと重ねて一体感を出す */
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
+        /* 独立性の強調セクション */
         .intro-section {
-            margin-bottom: 40px;
             padding: 30px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: var(--bg-color);
             border-radius: 10px;
+            margin-bottom: 50px;
+            border-left: 8px solid var(--main-color);
         }
 
         .intro-section h2 {
-            color: #667eea;
+            color: var(--main-color);
             margin-bottom: 15px;
-            font-size: 1.8em;
+            font-size: 2em;
         }
 
-        .intro-section p {
-            font-size: 1.1em;
-            line-height: 1.8;
-            margin-bottom: 10px;
-        }
-
+        /* 特徴カードの調整 */
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
-            margin: 40px 0;
+            margin-bottom: 50px;
         }
 
         .feature-card {
+            border-bottom: 3px solid var(--accent-color);
             padding: 30px;
-            background: #f8f9fa;
+            background: #ffffff;
             border-radius: 10px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-
-        .feature-icon {
-            font-size: 2.5em;
-            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         .feature-card h3 {
-            color: #667eea;
+            color: var(--main-color);
             margin-bottom: 15px;
             font-size: 1.4em;
         }
 
-        .feature-card p {
-            color: #666;
-            line-height: 1.6;
+        .price-model {
+            margin: 60px 0;
         }
-
-        .how-it-works {
-            margin: 50px 0;
-        }
-
-        .how-it-works h2 {
+        
+        .price-model h2 {
             text-align: center;
-            color: #667eea;
+            color: var(--main-color);
             font-size: 2em;
             margin-bottom: 40px;
         }
 
-        .steps {
+        .model-cards {
             display: flex;
-            flex-direction: column;
             gap: 30px;
-        }
-
-        .step {
-            display: flex;
-            align-items: start;
-            gap: 20px;
-            padding: 25px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 5px solid #667eea;
-        }
-
-        .step-number {
-            background: #667eea;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 1.2em;
-            flex-shrink: 0;
         }
 
-        .step-content h3 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 1.3em;
-        }
-
-        .step-content p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 50px 0;
-            text-align: center;
-        }
-
-        .stat-card {
+        .model-card {
+            flex: 1;
             padding: 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
             border-radius: 10px;
-        }
-
-        .stat-number {
-            font-size: 2.5em;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-
-        .cta-section {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             text-align: center;
-            padding: 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
-            color: white;
-            margin-top: 40px;
         }
 
-        .cta-section h2 {
-            font-size: 2em;
+        .model-card.free {
+            background: var(--bg-color);
+            border: 1px solid var(--main-color);
+        }
+
+        .model-card.paid {
+            background: var(--main-color);
+            color: white;
+        }
+
+        .model-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: inherit;
+        }
+
+        .model-card.free h3 {
+            color: var(--main-color);
+        }
+
+        .model-card .label {
+            font-size: 0.9em;
+            display: block;
             margin-bottom: 20px;
-        }
-
-        .cta-section p {
-            font-size: 1.2em;
-            margin-bottom: 30px;
-            opacity: 0.95;
-        }
-
-        .contact-info {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 10px;
-            display: inline-block;
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px;
-            color: white;
             opacity: 0.8;
         }
 
+        .model-card .price-tag {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+
+        .model-card.paid .price-tag {
+             color: white;
+        }
+
+        /* フッターの調整 */
+        footer {
+            padding: 30px;
+            text-align: center;
+            background-color: var(--main-color);
+            color: white;
+            opacity: 0.9;
+        }
+
+        /* レスポンシブ対応 (価格カードを縦積みに) */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2em;
-            }
-
-            .main-content {
-                padding: 20px;
-            }
-
-            .features {
-                grid-template-columns: 1fr;
+            .model-cards {
+                flex-direction: column;
             }
         }
     </style>
@@ -244,139 +194,75 @@
 <body>
     <div class="container">
         <header>
-            <h1>🔍 SNSデマ検証・注意喚起サービス</h1>
-            <p class="subtitle">SNSに蔓延するデマや誤情報を検証し、必要に応じて注意を喚起します</p>
-            <span class="beta-badge">β版運用中 - フィードバック募集中</span>
+            <h1>独立系ファクトチェック・情報検証サービス</h1>
+            <p class="subtitle">拡散性の高い誤情報・デマを**迅速**に検証し、その**根拠（エビデンス）**を公開します。</p>
+            <a href="#report" class="cta-button">情報提供・検証依頼はこちら 💬</a>
         </header>
 
         <div class="main-content">
             <div class="intro-section">
-                <h2>このサービスについて</h2>
-                <p>個人開発者が作った、SNS上のデマ・誤情報を検証するファクトチェックサービスです。</p>
-                <p>政治家や報道機関、一般アカウントから寄せられた情報を人の目で確認し、デマの可能性がある投稿を検証。必要に応じて注意喚起を行います。</p>
-                <p>個人開発ですが、SNS上の情報汚染を少しでも減らし、健全な言論空間の維持に貢献することを目指しています。</p>
+                <h2>👤 独立性と公正性：当サービスが選ばれる理由</h2>
+                <p>当サービスは、特定の政治・商業団体に属さない**独立した個人開発者**によって運営されています。この独立性により、外部からの影響を一切受けない**絶対的な中立性**を確保し、**証拠のみに基づいた客観的なファクトチェック**を迅速に実施します。</p>
+                <p>**IFCN（国際ファクトチェックネットワーク）の原則**に則り、透明性の高いプロセスで情報汚染に立ち向かいます。</p>
             </div>
 
             <div class="features">
                 <div class="feature-card">
-                    <div class="feature-icon">📨</div>
-                    <h3>情報提供の受付</h3>
-                    <p>政治家、報道関係者、一般ユーザーから「これはデマではないか？」という情報提供を受け付けます。誰でも気になる投稿を報告できます。</p>
-                </div>
-
-                <div class="feature-card">
                     <div class="feature-icon">👤</div>
-                    <h3>人力での確認</h3>
-                    <p>報告された投稿を人の目で確認し、信頼できる情報源と照合。デマの可能性を判断し、優先順位をつけて検証を行います。</p>
+                    <h3>中立的な目視検証</h3>
+                    <p>AIによる自動検出だけでなく、**専門的な知見を持つ人間の目**で投稿の内容、情報源の信頼性、拡散状況を精査し、検証の優先順位を判断します。</p>
                 </div>
 
                 <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
-                    <h3>ファクトチェック</h3>
-                    <p>複数の信頼できる情報源を参照し、事実関係を確認。公的機関の発表、報道記事、専門家の見解などエビデンスに基づいた検証結果を作成します。</p>
+                    <div class="feature-icon">✅</div>
+                    <h3>エビデンスに基づく検証</h3>
+                    <p>公的機関の発表、報道記事、専門家の見解など、**複数の信頼できる情報源**を参照して事実関係を徹底的に裏付けます。検証結果には必ずエビデンスを明記します。</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">⚠️</div>
-                    <h3>注意喚起の発信</h3>
-                    <p>デマと判明した情報については、検証結果とともに注意喚起を発信。LINE・メール・Slackなどで関係者に通知します。</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>デマ傾向の分析</h3>
-                    <p>どのようなデマが拡散しやすいか、どのトピックで誤情報が多いかを分析。定期レポートで傾向をお知らせします。</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🚀</div>
-                    <h3>継続的な改善</h3>
-                    <p>利用者のフィードバックを元に検証精度を向上。個人開発ならではの機動力で、すぐに機能を改善していきます。</p>
+                    <h3>検証結果の迅速な公表</h3>
+                    <p>デマと判明した情報については、検証結果を分かりやすくまとめて公開。情報提供者や登録ユーザーに迅速に通知し、被害の拡大を防ぎます。</p>
                 </div>
             </div>
 
-            <div class="how-it-works">
-                <h2>サービスの流れ</h2>
-                <div class="steps">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <h3>情報提供</h3>
-                            <p>政治家、メディア関係者、一般ユーザーが「怪しい」と思った投稿のURLや内容を送信します。匿名での報告も可能です。</p>
-                        </div>
+            <div class="price-model">
+                <h2>収益化モデル：公正性を担保する二層構造</h2>
+                <div class="model-cards">
+                    <div class="model-card free">
+                        <h3>公的ファクトチェック</h3>
+                        <span class="label">社会的に影響の大きい誤情報に対する検証</span>
+                        <div class="price-tag">無料</div>
+                        <p>対象：政治、災害、公共衛生など、**公共の利益**に関わるSNS上の情報。</p>
+                        <p>※この活動は、信頼性向上と将来的な寄付・助成金獲得のための基盤となります。</p>
                     </div>
 
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <h3>内容確認</h3>
-                            <p>報告された投稿を人の目で確認。投稿の内容、情報源の信頼性、拡散状況などを確認し、優先順位をつけて検証を進めます。</p>
-                        </div>
-                    </div>
-
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <h3>事実確認</h3>
-                            <p>優先度の高い投稿について、公的機関の発表、報道記事、専門家の見解など、信頼できる情報源を参照して事実関係を確認します。</p>
-                        </div>
-                    </div>
-
-                    <div class="step">
-                        <div class="step-number">4</div>
-                        <div class="step-content">
-                            <h3>検証結果の公開</h3>
-                            <p>デマと判明した場合、検証結果を分かりやすくまとめて公開。情報提供者や登録ユーザーに通知し、SNSでの注意喚起も行います。</p>
-                        </div>
-                    </div>
-
-                    <div class="step">
-                        <div class="step-number">5</div>
-                        <div class="step-content">
-                            <h3>継続的な監視</h3>
-                            <p>一度検証したデマが再拡散されていないか継続的に監視。新たな変形デマが出現した場合も迅速に対応します。</p>
-                        </div>
+                    <div class="model-card paid">
+                        <h3>企業・団体向け検証</h3>
+                        <span class="label">特定の業務コンテンツに関する検証（業務委託）</span>
+                        <div class="price-tag">個別見積もり</div>
+                        <p>対象：広告、広報、政策資料、報道前の記事など、**業務上の正確性**が求められるコンテンツ。</p>
+                        <p>※**契約内容を公開**し、検証プロセスの独立性を厳守することで中立性を保ちます。</p>
                     </div>
                 </div>
             </div>
 
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-number">6〜20倍</div>
-                    <div class="stat-label">デマは事実より速く拡散<br>
-                    <a href="https://www.natureasia.com/ja-jp/ndigest/v15/n5/フェイクニュースは速く広く伝わる/92004" target="_blank" style="color: white; text-decoration: underline; opacity: 0.9; font-size: 0.85em;">（MIT研究：1,500人到達で6倍、10層到達で20倍）</a></div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-number">24時間</div>
-                    <div class="stat-label">報告から初期分析まで<br>（目標対応時間）</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-number">複数</div>
-                    <div class="stat-label">信頼できる情報源で<br>クロスチェック</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-number">迅速</div>
-                    <div class="stat-label">早期発見で<br>被害を最小化</div>
-                </div>
-            </div>
-
-            <div class="cta-section">
-                <h2>β版テスター募集中</h2>
-                <p>現在、サービスの精度向上のため、β版テスターを募集しています。<br>
-                政治家の方、報道関係者の方、デマ対策に関心のある方、ぜひご参加ください。</p>
-                <div class="contact-info">
-                    <p>📧 お問い合わせ・フィードバック受付中</p>
-                    <p>サービスに関するご質問、情報提供をお待ちしています</p>
-                </div>
+            <div class="cta-section" id="report">
+                <h2>情報汚染に立ち向かうパートナーを求めています</h2>
+                <p>現在、公的ファクトチェックの情報提供、および企業・団体向け検証の依頼を受け付けています。</p>
+                
+                <a href="[情報提供フォームのURL]" class="cta-button">情報提供・検証を依頼する 💬</a>
+                <p style="margin-top: 20px; font-size: 0.9em; color: var(--main-color);">
+                    <a href="[ポリシーページのURL]" style="color: var(--main-color); text-decoration: underline;">▶︎ 運営ポリシー・IFCN原則へのコミットメント</a>
+                </p>
+                <span style="display: block; margin-top: 10px; font-size: 0.9em; color: var(--main-color); border: 1px solid var(--main-color); display: inline-block; padding: 5px 15px; border-radius: 20px;">
+                    β版運用中 - フィードバック募集中
+                </span>
             </div>
         </div>
-
         <footer>
-            <p>個人開発プロジェクト | SNSの健全な情報環境を目指して</p>
-            <p>&copy; 2025 ファクトチェックサービス β版</p>
+            <p>独立系個人開発プロジェクト | SNSの健全な情報環境を目指して</p>
+            <p>&copy; 2025 ファクトチェックサービス</p>
         </footer>
     </div>
 </body>
